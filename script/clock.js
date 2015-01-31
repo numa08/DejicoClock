@@ -1,13 +1,3 @@
-var runOnSeconds = function(handler, seconds) {
-	setInterval(function() {
-		var date = new Date();
-		if (seconds != date.getSeconds()) {
-			return;
-		}
-		handler();
-	}, 100);
-};
-
 $(function  () {
 	var updateClock = function() {
 		var date = new Date();
@@ -16,7 +6,7 @@ $(function  () {
 		var currenClock = hour + ":" + minutes;
 		$('#clock').text(currenClock);
 	};
-
+	
 	runOnSeconds(updateClock, 0);
 	updateClock();
 });
