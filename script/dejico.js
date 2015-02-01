@@ -15,7 +15,8 @@ $(function() {
 		if (data.contents.length == newIndexes.length) {
 			newIndexes = [];
 		}
-		//TODO update image
+		$('.content').empty()
+		            .append('<iframe class="dejico" width="100%" height="100%" src="' + dejico +'"></iframe>');
 		var date = new Date();
 		var interval = 60 - date.getSeconds();
 		console.log('did update dejico index ' + index);
