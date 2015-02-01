@@ -1,9 +1,15 @@
-var loadDejico = function(path, handler){};
+var loadDejico = function(path, handler){
+    $.ajax({
+		url: path
+	}).done(function(data){
+		handler(data);
+	});
+};
 
 $(function() {
 
 	var updateDejico = function(data, selectedIndexes) {
-		var index = 0;//todo
+		var index = Math.floor(Math.random() * data.contents.length);
 		var dejico = data.contents[index];
 		var newIndexes = selectedIndexes.concat([index]);
 		if (data.contents.length == newIndexes.length) {
@@ -12,6 +18,7 @@ $(function() {
 		//TODO update image
 		var date = new Date();
 		var interval = 60 - date.getSeconds();
+		console.log('did update dejico index ' + index);
 		setTimeout(function(){
 			updateDejico(data, newIndexes);
 		}, interval * 1000);
