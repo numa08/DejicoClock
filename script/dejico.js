@@ -7,40 +7,42 @@ var loadDejico = function(path, handler){
 };
 
 $(function() {
-
 	var updateDejico = function(data, selectedIndexes) {
 		var index = Math.floor(Math.random() * data.contents.length);
-		var dejico = data.contents[index];
+		var targetOffset = $('#dejico' + index).offset().top;
+		$('html,body').animate({scrollTop: targetOffset}, 1000);
+
 		var newIndexes = selectedIndexes.concat([index]);
 		if (data.contents.length == newIndexes.length) {
 			newIndexes = [];
 		}
-		appendDejicoWithQuery(dejico);
+
 		var date = new Date();
 		var interval = 60 - date.getSeconds();
-		console.log('did update dejico index ' + index);
 		setTimeout(function(){
 			updateDejico(data, newIndexes);
 		}, interval * 1000);
-
 	}
 
+
+    var arrangeDejico = function(data) {
+    	$(data.contents).sort(function() {
+    		return Math.random() - Math.random();
+    	}).map(function (idx, elem) {
+    		var path;
+			if (window.matchMedia("(min-width: 390px)").matches) {
+				path = 'contents/medium/' + elem;
+			}
+			if (window.matchMedia("(min-width: 700px)").matches) {
+				path = 'contents/large/' + elem;
+			}
+			return path;
+    	}).each(function (idx, elem){
+    		$('.content').append('<iframe id="dejico' + idx + '" class="dejico" width="100%" height="100%" src="' + elem +'"></iframe>');
+    	});
+    	updateDejico(data, []);
+    }
 	loadDejico("./datasource/dejico.json", function(data) {
-		updateDejico(data, []);
+		arrangeDejico(data);
 	});
 });
-
-
-var appendDejicoWithQuery = function(path) {
-	var appendDejico = function(src) {
-		$('.content').empty()
-		            .append('<iframe class="dejico" width="100%" height="100%" src="' + src +'"></iframe>');
-	}
-	if (window.matchMedia("(min-width: 390px)").matches) {
-		appendDejico('contents/medium/' + path);
-	}
-	if (window.matchMedia("(min-width: 700px)").matches) {
-		appendDejico('contents/large/' + path);
-	}
-
-};
