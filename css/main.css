@@ -57,3 +57,16 @@ html,body {
 .dejico {
 	border: none;
 }
+
+.socliebutton_container {
+    position:fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+.soclialbutton {
+    float:left;
+}
